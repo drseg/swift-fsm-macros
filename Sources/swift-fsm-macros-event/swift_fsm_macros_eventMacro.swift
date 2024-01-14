@@ -12,7 +12,7 @@ public struct EventMacro: ExpressionMacro {
             fatalError("compiler bug: the macro does not have any arguments")
         }
 
-        return "let \(argument) = event(\"\(argument)\")"
+        return "static let \(argument) = event(\"\(argument)\")"
     }
 }
 
@@ -25,7 +25,7 @@ public struct EventWithValueMacro: ExpressionMacro {
             fatalError("compiler bug: the macro does not have any arguments")
         }
 
-        return "let \(argument) = eventWithValue(\"\(argument)\")"
+        return "static let \(argument) = eventWithValue(\"\(argument)\")"
     }
 }
 

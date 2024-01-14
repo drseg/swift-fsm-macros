@@ -15,7 +15,7 @@ final class swift_fsm_macros_tests: XCTestCase {
             #event(eventName)
             """,
             expandedSource: """
-            let eventName = event("eventName")
+            static let eventName = event("eventName")
             """,
             macros: testMacros
         )
@@ -27,7 +27,7 @@ final class swift_fsm_macros_tests: XCTestCase {
             #eventWithValue(eventName)
             """,
             expandedSource: """
-            let eventName = eventWithValue("eventName")
+            static let eventName = eventWithValue("eventName")
             """,
             macros: testMacros
         )

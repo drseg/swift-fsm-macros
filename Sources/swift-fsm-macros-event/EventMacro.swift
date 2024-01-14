@@ -8,29 +8,11 @@ public struct EventMacro: DeclarationMacro {
         of node: some FreestandingMacroExpansionSyntax,
         in context: some MacroExpansionContext)
     throws -> [SwiftSyntax.DeclSyntax] {
-        [try node.firstExpression.formatted(functionName: "event")]
-    }
-}
-
-public struct EventWithValueMacro: DeclarationMacro {
-    public static func expansion(
-        of node: some FreestandingMacroExpansionSyntax,
-        in context: some MacroExpansionContext
-    ) throws -> [SwiftSyntax.DeclSyntax] {
-        [try node.firstExpression.formatted(functionName: "eventWithValue")]
-    }
-}
-
-public struct EventsMacro: DeclarationMacro {
-    public static func expansion(
-        of node: some FreestandingMacroExpansionSyntax,
-        in context: some MacroExpansionContext
-    ) throws -> [SwiftSyntax.DeclSyntax] {
         [try node.eventsFormatted(functionName: "event")]
     }
 }
 
-public struct EventsWithValueMacro: DeclarationMacro {
+public struct EventWithValueMacro: DeclarationMacro {
     public static func expansion(
         of node: some FreestandingMacroExpansionSyntax,
         in context: some MacroExpansionContext
@@ -55,14 +37,6 @@ extension ExprSyntax {
 extension FreestandingMacroExpansionSyntax {
     var expressions: [ExprSyntax] {
         argumentList.map(\.expression)
-    }
-
-    var firstExpression: ExprSyntax {
-        guard let argument = expressions.first else {
-            fatalError("compiler bug: the macro does not have any arguments")
-        }
-
-        return argument
     }
 
     func eventsFormatted(functionName: String) throws -> DeclSyntax {

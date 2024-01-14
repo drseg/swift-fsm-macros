@@ -34,6 +34,20 @@
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "swift-fsm-macros-client"
+               BuildableName = "swift-fsm-macros-client"
+               BlueprintName = "swift-fsm-macros-client"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -69,12 +83,21 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
+            BlueprintIdentifier = "swift-fsm-macros-client"
+            BuildableName = "swift-fsm-macros-client"
+            BlueprintName = "swift-fsm-macros-client"
+            ReferencedContainer = "container:">
+         </BuildableReference>
+      </BuildableProductRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
             BlueprintIdentifier = "swift-fsm-macrosClient"
             BuildableName = "swift-fsm-macrosClient"
             BlueprintName = "swift-fsm-macrosClient"
             ReferencedContainer = "container:">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -86,9 +109,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "swift-fsm-macrosClient"
-            BuildableName = "swift-fsm-macrosClient"
-            BlueprintName = "swift-fsm-macrosClient"
+            BlueprintIdentifier = "swift-fsm-macros-client"
+            BuildableName = "swift-fsm-macros-client"
+            BlueprintName = "swift-fsm-macros-client"
             ReferencedContainer = "container:">
          </BuildableReference>
       </BuildableProductRunnable>

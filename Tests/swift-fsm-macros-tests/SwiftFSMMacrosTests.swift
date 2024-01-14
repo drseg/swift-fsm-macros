@@ -6,40 +6,20 @@ import swift_fsm_macros
 
 let testMacros: [String: Macro.Type] = [
     "event": EventMacro.self,
-    "events": EventsMacro.self,
     "eventWithValue": EventWithValueMacro.self,
-    "eventsWithValue": EventsWithValueMacro.self
 ]
 
 final class swift_fsm_macros_tests: XCTestCase {
-    func testEventMacro() throws {
-        assertMacroExpansion(
-            """
-            #event("eventName")
-            """,
-            expandedSource: """
-            static let eventName = event("eventName")
-            """,
-            macros: testMacros
-        )
-    }
+    #event("cat", "fish")
+    #eventWithValue("dog", "llama")
 
-    func testEventWithValueMacro() throws {
-        assertMacroExpansion(
-            """
-            #eventWithValue("eventName")
-            """,
-            expandedSource: """
-            static let eventName = eventWithValue("eventName")
-            """,
-            macros: testMacros
-        )
-    }
+    static func event(_ s: String) -> String { s }
+    static func eventWithValue(_ s: String) -> String { s }
 
-    func testEventsMacro() throws {
+    func testEventMacroExpansion() throws {
         assertMacroExpansion(
             """
-            #events("first", "second", "third", "fourth")
+            #event("first", "second", "third", "fourth")
             """,
             expandedSource: """
             static let first = event("first")
@@ -51,10 +31,15 @@ final class swift_fsm_macros_tests: XCTestCase {
         )
     }
 
-    func testEventsWithValueMacro() throws {
+    func testEventMacro() throws {
+        XCTAssertEqual(Self.cat, "cat")
+        XCTAssertEqual(Self.fish, "fish")
+    }
+
+    func testEventWithValueMacroExpansion() throws {
         assertMacroExpansion(
             """
-            #eventsWithValue("first", "second", "third", "fourth")
+            #eventWithValue("first", "second", "third", "fourth")
             """,
             expandedSource: """
             static let first = eventWithValue("first")
@@ -64,5 +49,10 @@ final class swift_fsm_macros_tests: XCTestCase {
             """,
             macros: testMacros
         )
+    }
+
+    func testEventWithValueMacro() throws {
+        XCTAssertEqual(Self.dog, "dog")
+        XCTAssertEqual(Self.llama, "llama")
     }
 }

@@ -5,6 +5,7 @@ import swift_fsm_macros_event
 
 let testMacros: [String: Macro.Type] = [
     "event": EventMacro.self,
+    "events": EventsMacro.self,
     "eventWithValue": EventWithValueMacro.self
 ]
 
@@ -28,6 +29,21 @@ final class swift_fsm_macros_tests: XCTestCase {
             """,
             expandedSource: """
             static let eventName = eventWithValue("eventName")
+            """,
+            macros: testMacros
+        )
+    }
+
+    func testEventsMacro() throws {
+        assertMacroExpansion(
+            """
+            #events(first, second, third, fourth)
+            """,
+            expandedSource: """
+            static let first = event("first")
+            static let second = event("second")
+            static let third = event("third")
+            static let fourth = event("fourth")
             """,
             macros: testMacros
         )

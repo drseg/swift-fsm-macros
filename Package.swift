@@ -12,6 +12,10 @@ let package = Package(
             name: "swift-fsm-macros",
             targets: ["swift-fsm-macros"]
         ),
+        .executable(
+            name: "swift-fsm-macrosClient",
+            targets: ["swift-fsm-macrosClient"]
+        ),
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-syntax.git", from: "509.0.0"),
@@ -26,6 +30,8 @@ let package = Package(
         ),
 
         .target(name: "swift-fsm-macros", dependencies: ["swift-fsm-macros-event"]),
+
+        .executableTarget(name: "swift-fsm-macrosClient", dependencies: ["swift-fsm-macros"]),
 
         .testTarget(
             name: "swift-fsm-macros-tests",

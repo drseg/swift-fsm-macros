@@ -5,13 +5,16 @@ import swift_fsm_macros_event
 import swift_fsm_macros
 
 let testMacros: [String: Macro.Type] = [
-    "event": EventMacro.self,
-    "eventWithValue": EventWithValueMacro.self,
+    "events": EventMacro.self,
+    "eventsWithValue": EventWithValueMacro.self,
 ]
 
-final class swift_fsm_macros_tests: XCTestCase {
-    #event("cat", "fish")
-    #eventWithValue("dog", "llama")
+final class SwiftFSMMacrosTests: XCTestCase {
+    #event("robin")
+    #events("cat", "fish")
+
+    #eventWithValue("jay")
+    #eventsWithValue("dog", "llama")
 
     static func event(_ s: String) -> String { s }
     static func eventWithValue(_ s: String) -> String { s }
@@ -19,7 +22,7 @@ final class swift_fsm_macros_tests: XCTestCase {
     func testEventMacroExpansion() throws {
         assertMacroExpansion(
             """
-            #event("first", "second", "third", "fourth")
+            #events("first", "second", "third", "fourth")
             """,
             expandedSource: """
             static let first = event("first")
@@ -32,14 +35,14 @@ final class swift_fsm_macros_tests: XCTestCase {
     }
 
     func testEventMacro() throws {
-        XCTAssertEqual(Self.cat, "cat")
-        XCTAssertEqual(Self.fish, "fish")
+        XCTAssertEqual(SwiftFSMMacrosTests.cat, "cat")
+        XCTAssertEqual(SwiftFSMMacrosTests.fish, "fish")
     }
 
     func testEventWithValueMacroExpansion() throws {
         assertMacroExpansion(
             """
-            #eventWithValue("first", "second", "third", "fourth")
+            #eventsWithValue("first", "second", "third", "fourth")
             """,
             expandedSource: """
             static let first = eventWithValue("first")
@@ -52,7 +55,12 @@ final class swift_fsm_macros_tests: XCTestCase {
     }
 
     func testEventWithValueMacro() throws {
-        XCTAssertEqual(Self.dog, "dog")
-        XCTAssertEqual(Self.llama, "llama")
+        XCTAssertEqual(SwiftFSMMacrosTests.dog, "dog")
+        XCTAssertEqual(SwiftFSMMacrosTests.llama, "llama")
+    }
+
+    func testSingularMacros() throws {
+        XCTAssertEqual(SwiftFSMMacrosTests.robin, "robin")
+        XCTAssertEqual(SwiftFSMMacrosTests.jay, "jay")
     }
 }

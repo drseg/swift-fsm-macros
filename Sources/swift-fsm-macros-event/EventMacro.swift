@@ -26,7 +26,7 @@ extension ExprSyntax {
         guard
             let literalSegs = self.as(StringLiteralExprSyntax.self)?.segments,
             case .stringSegment(let literalSegment)? = literalSegs.first else {
-            throw "Arguments must be String literals"
+            throw "Event names must be String literals"
         }
 
         let text = literalSegment.content.text

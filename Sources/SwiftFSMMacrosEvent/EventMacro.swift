@@ -8,7 +8,7 @@ public struct EventMacro: DeclarationMacro {
         of node: some FreestandingMacroExpansionSyntax,
         in context: some MacroExpansionContext)
     throws -> [SwiftSyntax.DeclSyntax] {
-        [try node.eventsFormatted(functionName: "event")]
+        try node.eventsFormatted(functionName: "event")
     }
 }
 
@@ -17,15 +17,15 @@ public struct EventWithValueMacro: DeclarationMacro {
         of node: some FreestandingMacroExpansionSyntax,
         in context: some MacroExpansionContext
     ) throws -> [SwiftSyntax.DeclSyntax] {
-        [try node.eventsFormatted(functionName: "eventWithValue")]
+        try node.eventsFormatted(functionName: "eventWithValue")
     }
 }
 
 extension ExprSyntax {
     func formatted(functionName: String) throws -> DeclSyntax {
         guard
-            let literalSegs = self.as(StringLiteralExprSyntax.self)?.segments,
-            case .stringSegment(let literalSegment)? = literalSegs.first else {
+            let segments = self.as(StringLiteralExprSyntax.self)?.segments,
+            case .stringSegment(let literalSegment)? = segments.first else {
             throw "Event names must be String literals"
         }
 
@@ -35,18 +35,10 @@ extension ExprSyntax {
 }
 
 extension FreestandingMacroExpansionSyntax {
-    var expressions: [ExprSyntax] {
-        argumentList.map(\.expression)
-    }
-
-    func eventsFormatted(functionName: String) throws -> DeclSyntax {
-        DeclSyntax(
-            stringLiteral: try expressions.reduce(into: [DeclSyntax]()) {
-                $0.append(try $1.formatted(functionName: functionName))
-            }
-                .map(String.init)
-                .joined(separator: "\n")
-        )
+    func eventsFormatted(functionName: String) throws -> [DeclSyntax] {
+        try argumentList.map(\.expression).reduce(into: [DeclSyntax]()) {
+            $0.append(try $1.formatted(functionName: functionName))
+        }
     }
 }
 

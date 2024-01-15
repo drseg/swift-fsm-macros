@@ -35,8 +35,8 @@ final class SwiftFSMMacrosTests: XCTestCase {
     }
 
     func testEventMacro() throws {
-        XCTAssertEqual(SwiftFSMMacrosTests.cat, "cat")
-        XCTAssertEqual(SwiftFSMMacrosTests.fish, "fish")
+        XCTAssertEqual(Self.cat, "cat")
+        XCTAssertEqual(Self.fish, "fish")
     }
 
     func testEventWithValueMacroExpansion() throws {
@@ -55,12 +55,12 @@ final class SwiftFSMMacrosTests: XCTestCase {
     }
 
     func testEventWithValueMacro() throws {
-        XCTAssertEqual(SwiftFSMMacrosTests.dog, "dog")
-        XCTAssertEqual(SwiftFSMMacrosTests.llama, "llama")
+        XCTAssertEqual(Self.dog, "dog")
+        XCTAssertEqual(Self.llama, "llama")
     }
 
     func testSingularMacros() throws {
-        XCTAssertEqual(SwiftFSMMacrosTests.robin, "robin")
-        XCTAssertEqual(SwiftFSMMacrosTests.jay, "jay")
+        XCTAssertEqual(Self.robin, "robin")
+        XCTAssertEqual(Self.jay, "jay")
     }
 }

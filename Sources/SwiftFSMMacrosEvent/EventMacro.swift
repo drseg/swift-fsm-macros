@@ -45,7 +45,7 @@ extension FreestandingMacroExpansionSyntax {
 extension String: Error { }
 
 @main
-struct swift_fsm_macrosPlugin: CompilerPlugin {
+struct SwiftFSMMacrosPlugin: CompilerPlugin {
     let providingMacros: [Macro.Type] = [
         EventMacro.self, EventWithValueMacro.self
     ]

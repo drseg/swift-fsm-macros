@@ -19,7 +19,7 @@ final class SwiftFSMMacrosTests: XCTestCase {
     static func event(_ s: String) -> String { s }
     static func eventWithValue(_ s: String) -> String { s }
 
-    func testEventMacroExpansion() throws {
+    func testEventExpansion() throws {
         assertMacroExpansion(
             """
             #events("first", "second", "third", "fourth")
@@ -34,12 +34,21 @@ final class SwiftFSMMacrosTests: XCTestCase {
         )
     }
 
-    func testEventMacro() throws {
+    func testEventExpansionOnlyAllowsStringLiterals() throws {
+        assertMacroExpansion(
+            "#events(first)",
+            expandedSource: "#events(first)",
+            diagnostics: [.init("Event names must be String literals")],
+            macros: testMacros
+        )
+    }
+
+    func testEventsMacro() throws {
         XCTAssertEqual(Self.cat, "cat")
         XCTAssertEqual(Self.fish, "fish")
     }
 
-    func testEventWithValueMacroExpansion() throws {
+    func testEventsWithValueExpansion() throws {
         assertMacroExpansion(
             """
             #eventsWithValue("first", "second", "third", "fourth")
@@ -54,7 +63,16 @@ final class SwiftFSMMacrosTests: XCTestCase {
         )
     }
 
-    func testEventWithValueMacro() throws {
+    func testEventsWithValueExpansionOnlyAllowsStringLiterals() throws {
+        assertMacroExpansion(
+            "#eventsWithValue(first)",
+            expandedSource: "#eventsWithValue(first)",
+            diagnostics: [.init("Event names must be String literals")],
+            macros: testMacros
+        )
+    }
+
+    func testEventsWithValueMacro() throws {
         XCTAssertEqual(Self.dog, "dog")
         XCTAssertEqual(Self.llama, "llama")
     }
@@ -62,5 +80,11 @@ final class SwiftFSMMacrosTests: XCTestCase {
     func testSingularMacros() throws {
         XCTAssertEqual(Self.robin, "robin")
         XCTAssertEqual(Self.jay, "jay")
+    }
+}
+
+extension DiagnosticSpec {
+    init(_ message: String) {
+        self.init(message: message, line: 1, column: 1)
     }
 }

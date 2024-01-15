@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "swift-fsm-macros"
-               BuildableName = "swift-fsm-macros"
-               BlueprintName = "swift-fsm-macros"
+               BlueprintIdentifier = "SwiftFSMMacros"
+               BuildableName = "SwiftFSMMacros"
+               BlueprintName = "SwiftFSMMacros"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -28,9 +28,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "swift-fsm-macrosTests"
-               BuildableName = "swift-fsm-macrosTests"
-               BlueprintName = "swift-fsm-macrosTests"
+               BlueprintIdentifier = "swift-fsm-macros-tests"
+               BuildableName = "swift-fsm-macros-tests"
+               BlueprintName = "swift-fsm-macros-tests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -43,16 +43,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       shouldAutocreateTestPlan = "YES">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "swift-fsm-macrosTests"
-               BuildableName = "swift-fsm-macrosTests"
-               BlueprintName = "swift-fsm-macrosTests"
-               ReferencedContainer = "container:">
-            </BuildableReference>
-         </TestableReference>
          <TestableReference
             skipped = "NO">
             <BuildableReference
@@ -85,9 +75,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "swift-fsm-macros"
-            BuildableName = "swift-fsm-macros"
-            BlueprintName = "swift-fsm-macros"
+            BlueprintIdentifier = "SwiftFSMMacros"
+            BuildableName = "SwiftFSMMacros"
+            BlueprintName = "SwiftFSMMacros"
             ReferencedContainer = "container:">
          </BuildableReference>
       </MacroExpansion>

@@ -9,8 +9,8 @@ let package = Package(
     platforms: [.macOS(.v10_15), .iOS(.v13), .tvOS(.v13), .watchOS(.v6), .macCatalyst(.v13)],
     products: [
         .library(
-            name: "swift-fsm-macros",
-            targets: ["swift-fsm-macros"]
+            name: "SwiftFSMMacros",
+            targets: ["SwiftFSMMacros"]
         ),
     ],
     dependencies: [
@@ -18,19 +18,19 @@ let package = Package(
     ],
     targets: [
         .macro(
-            name: "swift-fsm-macros-event",
+            name: "SwiftFSMMacrosEvent",
             dependencies: [
                 .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
                 .product(name: "SwiftCompilerPlugin", package: "swift-syntax")
             ]
         ),
 
-        .target(name: "swift-fsm-macros", dependencies: ["swift-fsm-macros-event"]),
+        .target(name: "SwiftFSMMacros", dependencies: ["SwiftFSMMacrosEvent"]),
 
         .testTarget(
             name: "swift-fsm-macros-tests",
             dependencies: [
-                "swift-fsm-macros-event",
+                "SwiftFSMMacrosEvent",
                 .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),
             ]
         ),

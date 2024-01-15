@@ -1,8 +1,8 @@
 import SwiftSyntaxMacros
 import SwiftSyntaxMacrosTestSupport
 import XCTest
-import swift_fsm_macros_event
-import swift_fsm_macros
+import SwiftFSMMacros
+import SwiftFSMMacrosEvent
 
 let testMacros: [String: Macro.Type] = [
     "events": EventMacro.self,

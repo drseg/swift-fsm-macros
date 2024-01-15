@@ -28,7 +28,7 @@ let package = Package(
         .target(name: "SwiftFSMMacros", dependencies: ["SwiftFSMMacrosEvent"]),
 
         .testTarget(
-            name: "swift-fsm-macros-tests",
+            name: "SwiftFSMMacrosTests",
             dependencies: [
                 "SwiftFSMMacrosEvent",
                 .product(name: "SwiftSyntaxMacrosTestSupport", package: "swift-syntax"),

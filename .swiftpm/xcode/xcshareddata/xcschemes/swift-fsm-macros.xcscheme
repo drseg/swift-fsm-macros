@@ -28,9 +28,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "swift-fsm-macros-tests"
-               BuildableName = "swift-fsm-macros-tests"
-               BlueprintName = "swift-fsm-macros-tests"
+               BlueprintIdentifier = "SwiftFSMMacrosTests"
+               BuildableName = "SwiftFSMMacrosTests"
+               BlueprintName = "SwiftFSMMacrosTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -47,9 +47,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "swift-fsm-macros-tests"
-               BuildableName = "swift-fsm-macros-tests"
-               BlueprintName = "swift-fsm-macros-tests"
+               BlueprintIdentifier = "SwiftFSMMacrosTests"
+               BuildableName = "SwiftFSMMacrosTests"
+               BlueprintName = "SwiftFSMMacrosTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>

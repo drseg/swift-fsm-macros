@@ -5,16 +5,132 @@ import SwiftFSMMacros
 import SwiftFSMMacrosEvent
 
 let testMacros: [String: Macro.Type] = [
-    "events": EventMacro.self,
-    "eventsWithValue": EventWithValueMacro.self,
+    "letEvents": StaticLetEventMacro.self,
+    "letEventsWithValue": StaticLetEventWithValueMacro.self,
+    "funcEvents": StaticFuncEventMacro.self,
+    "funcEventsWithValue": StaticFuncEventWithValueMacro.self
 ]
 
-final class SwiftFSMMacrosTests: XCTestCase {
-    #event("robin")
-    #events("cat", "fish")
+/// Requires SwiftFSM...
+//enum Event {
+//    /// Cannot add functions to classes using macros (Swift bug)
+//    /// Adding here in this extension as workaround
+//    /// https://github.com/apple/swift/issues/68704
+//
+//    #funcEvents("first", "second")
+//    #funcEventsWithValue("third", "fourth")
+//}
 
-    #eventWithValue("jay")
-    #eventsWithValue("dog", "llama")
+final class StaticFuncEventTests: XCTestCase {
+    func testEventExpansion() {
+        assertMacroExpansion(
+            """
+            #funcEvents("first", "second")
+            """,
+            expandedSource:
+            """
+            static func first() -> FSMEvent<String> {
+                FSMEvent<String>(name: "first")
+            }
+            static func second() -> FSMEvent<String> {
+                FSMEvent<String>(name: "second")
+            }
+            """,
+            macros: testMacros)
+    }
+
+    func testEventExpansionOnlyAllowsStringLiterals() throws {
+        assertMacroExpansion(
+            "#funcEvents(first)",
+            expandedSource: "#funcEvents(first)",
+            diagnostics: [.init("Event names must be String literals")],
+            macros: testMacros
+        )
+    }
+/// Requires SwiftFSM...
+//    func testLiveEventMacro() throws {
+//        XCTAssertEqual(Event.first().name, "first")
+//        XCTAssertEqual(Event.first().value, nil)
+//
+//        XCTAssertEqual(Event.second().name, "second")
+//        XCTAssertEqual(Event.second().value, nil)
+//    }
+
+    func testEventWithValueExpansion() throws {
+        assertMacroExpansion(
+            """
+            #funcEventsWithValue("third", "fourth")
+            """,
+            expandedSource:
+            """
+            static func third<T: Hashable>(_ value: FSMValue<T> = .any) -> FSMEvent<T> {
+                FSMEvent<T>(value, name: "third")
+            }
+            static func third<T: Hashable>(_ value: T) -> FSMEvent<T> {
+                FSMEvent<T>(FSMValue<T>.some(value), name: "third")
+            }
+            static func fourth<T: Hashable>(_ value: FSMValue<T> = .any) -> FSMEvent<T> {
+                FSMEvent<T>(value, name: "fourth")
+            }
+            static func fourth<T: Hashable>(_ value: T) -> FSMEvent<T> {
+                FSMEvent<T>(FSMValue<T>.some(value), name: "fourth")
+            }
+            """,
+            macros: testMacros)
+    }
+
+    func testLiveEventWithValueMacro() throws {
+        /// The .any doesn't 'have' a generic type, so what can we do with it?
+//        XCTAssertEqual(Event.third(.any).value, nil)
+    }
+
+    /*
+     #eventStructure(name: "Event", encapsulation: .public) {
+         #events {
+              "first"
+              "second"
+         }
+
+          #eventsWithValues {
+              ("third", String.self)
+              ("fourth", Int.self)
+         }
+     }
+
+     becomes:
+
+     public enum Event: EventWithValues {
+        case first, second, third(FSMValue<String>), fourth(FSMValue<Int>)
+
+        public static func third(_ value: String) -> Event {
+            .third(FSMValue.some(value))
+        }
+
+        public static func fourth(_ value: Int) -> Event {
+            .fourth(FSMValue.some(value))
+        }
+
+        public var stringValue: String? {
+            switch self {
+            case .third(let value): value.value
+            default: nil
+        }
+
+        public var stringValue: Int? {
+            switch self {
+            case .fourth(let value): value.value
+            default: nil
+        }
+     }
+     */
+}
+
+final class StaticLetEventTests: XCTestCase {
+    #letEvent("robin")
+    #letEvents("cat", "fish")
+
+    #letEventWithValue("jay")
+    #letEventsWithValue("dog", "llama")
 
     static func event(_ s: String) -> String { s }
     static func eventWithValue(_ s: String) -> String { s }
@@ -22,7 +138,7 @@ final class SwiftFSMMacrosTests: XCTestCase {
     func testEventExpansion() throws {
         assertMacroExpansion(
             """
-            #events("first", "second", "third", "fourth")
+            #letEvents("first", "second", "third", "fourth")
             """,
             expandedSource: """
             static let first = event("first")
@@ -36,8 +152,8 @@ final class SwiftFSMMacrosTests: XCTestCase {
 
     func testEventExpansionOnlyAllowsStringLiterals() throws {
         assertMacroExpansion(
-            "#events(first)",
-            expandedSource: "#events(first)",
+            "#letEvents(first)",
+            expandedSource: "#letEvents(first)",
             diagnostics: [.init("Event names must be String literals")],
             macros: testMacros
         )
@@ -51,7 +167,7 @@ final class SwiftFSMMacrosTests: XCTestCase {
     func testEventsWithValueExpansion() throws {
         assertMacroExpansion(
             """
-            #eventsWithValue("first", "second", "third", "fourth")
+            #letEventsWithValue("first", "second", "third", "fourth")
             """,
             expandedSource: """
             static let first = eventWithValue("first")
@@ -65,9 +181,27 @@ final class SwiftFSMMacrosTests: XCTestCase {
 
     func testEventsWithValueExpansionOnlyAllowsStringLiterals() throws {
         assertMacroExpansion(
-            "#eventsWithValue(first)",
-            expandedSource: "#eventsWithValue(first)",
+            "#letEventsWithValue(first)",
+            expandedSource: "#letEventsWithValue(first)",
             diagnostics: [.init("Event names must be String literals")],
+            macros: testMacros
+        )
+    }
+
+    func testEventsVariadThrowsWithNoArguments() {
+        assertMacroExpansion(
+            "#letEvents()",
+            expandedSource: "#letEvents()",
+            diagnostics: [.init("Must include at least one String literal argument")],
+            macros: testMacros
+        )
+    }
+
+    func testEventsWithValueVariadThrowsWithNoArguments() {
+        assertMacroExpansion(
+            "#letEventsWithValue()",
+            expandedSource: "#letEventsWithValue()",
+            diagnostics: [.init("Must include at least one String literal argument")],
             macros: testMacros
         )
     }
